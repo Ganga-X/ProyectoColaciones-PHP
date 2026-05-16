@@ -14,7 +14,6 @@ $result = $stmt->get_result();
 if ($user = $result->fetch_assoc()) {
 
     if (password_verify($password, $user['password'])) {
-
         $_SESSION['id'] = $user['id'];
         $_SESSION['nombre'] = $user['nombre'];
         $_SESSION['rol'] = $user['rol'];

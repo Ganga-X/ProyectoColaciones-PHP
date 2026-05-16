@@ -8,7 +8,7 @@ $dia = $_POST['dia'];
 
 $imagen = "";
 
-if ($_FILES['imagen']['name']) {
+if (!empty($_FILES['imagen']['name'])) {
     $imagen = time() . "_" . $_FILES['imagen']['name'];
     move_uploaded_file($_FILES['imagen']['tmp_name'], "../uploads/" . $imagen);
 }
@@ -21,3 +21,4 @@ $stmt->bind_param("ssiss", $nombre, $descripcion, $precio, $dia, $imagen);
 $stmt->execute();
 
 header("Location: ../views/admin.php");
+?>
