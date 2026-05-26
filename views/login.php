@@ -29,6 +29,16 @@
             Instalar App
         </button>
 
+        <!-- ✅ MENSAJE DE ERROR -->
+        <?php if(isset($_GET['error'])): ?>
+            <p style="color:red; margin-bottom:10px;">
+                <?php
+                if($_GET['error'] == 'pass') echo "❌ Contraseña incorrecta";
+                if($_GET['error'] == 'user') echo "❌ Usuario no encontrado";
+                ?>
+            </p>
+        <?php endif; ?>
+
         <!-- FORM LOGIN -->
         <form action="../controllers/authController.php" method="POST">
 
@@ -51,13 +61,11 @@
         <!-- SEPARADOR -->
         <hr style="margin:20px 0;">
 
-        <!-- BOTÓN REGISTRO -->
-        <p>
-            ¿No tienes cuenta?
-        </p>
+        <!-- REGISTRO -->
+        <p>¿No tienes cuenta?</p>
 
         <a href="register.php">
-            <button class="install-btn" style="background:#8e44ad;">
+            <button type="button" class="install-btn" style="background:#8e44ad;">
                 Crear cuenta
             </button>
         </a>

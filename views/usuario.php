@@ -24,20 +24,19 @@ $dia = $_GET['dia'] ?? 'Lunes';
 
 <style>
 
-/* RESET */
+/* TU MISMO ESTILO ORIGINAL */
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* BODY */
 body {
     font-family: Arial, sans-serif;
     background: #f4f6f9;
 }
 
-/* HEADER */
 .header {
     background: #2c3e50;
     color: white;
@@ -47,7 +46,6 @@ body {
     align-items: center;
 }
 
-/* FOTO + USUARIO */
 .user-header {
     display: flex;
     align-items: center;
@@ -61,12 +59,10 @@ body {
     object-fit: cover;
 }
 
-/* CONTAINER */
 .container {
     padding: 15px;
 }
 
-/* INFO */
 .user-info {
     background: white;
     padding: 12px;
@@ -75,7 +71,6 @@ body {
     font-size: 14px;
 }
 
-/* NAV DIAS */
 .nav-dias {
     margin-bottom: 10px;
 }
@@ -87,14 +82,12 @@ body {
     color: #3498db;
 }
 
-/* GRID */
 .grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px,1fr));
     gap: 10px;
 }
 
-/* CARD */
 .card {
     background: white;
     border-radius: 10px;
@@ -110,7 +103,36 @@ body {
     padding: 10px;
 }
 
-/* RESPONSIVE MOBILE */
+/* ✅ NUEVO: ESTILO FORM PEDIDO (sin romper diseño) */
+.card form {
+    margin-top: 10px;
+}
+
+.card input,
+.card select {
+    width: 100%;
+    padding: 6px;
+    margin-top: 6px;
+    margin-bottom: 6px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 12px;
+}
+
+.card button {
+    width: 100%;
+    padding: 8px;
+    background: #27ae60;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.card button:hover {
+    background: #219150;
+}
+
 @media (max-width: 600px) {
     .grid {
         grid-template-columns: 1fr;
@@ -123,7 +145,6 @@ body {
 
 <body>
 
-<!-- HEADER -->
 <div class="header">
 
     <div class="user-header">
@@ -140,9 +161,8 @@ body {
 
 <div class="container">
 
-    <!-- INFO USUARIO -->
     <div class="user-info">
-        <strong>Teléfono:</strong> <?php echo $user['telefono'] ?? 'No registrado'; ?> <br>
+        <strong>Teléfono:</strong> <?php echo $user['telefono'] ?? 'No registrado'; ?><br>
         <strong>Dirección:</strong> <?php echo $user['direccion'] ?? 'No registrada'; ?>
         
         <br><br>
@@ -152,7 +172,6 @@ body {
         </a>
     </div>
 
-    <!-- MENÚ -->
     <h3>Menú del día: <?php echo $dia; ?></h3>
 
     <div class="nav-dias">
@@ -165,7 +184,6 @@ body {
 
     <hr>
 
-    <!-- PLATOS -->
     <div class="grid">
 
     <?php
@@ -182,6 +200,31 @@ body {
             <h4><?php echo $row['nombre']; ?></h4>
             <p><?php echo $row['descripcion']; ?></p>
             <p><strong>$<?php echo $row['precio']; ?></strong></p>
+
+            <!-- ✅ PEDIDO -->
+            <form action="../controllers/pedidoController.php" method="POST">
+
+                <input type="hidden" name="plato_id" value="<?php echo $row['id']; ?>">
+                <input type="hidden" name="usuario_id" value="<?php echo $_SESSION['id']; ?>">
+
+                <label>Cantidad:</label>
+                <input type="number" name="cantidad" min="1" value="1" required>
+
+                <label>Hora:</label>
+                <select name="hora" required>
+                    <option value="12:00">12:00</option>
+                    <option value="12:30">12:30</option>
+                    <option value="13:00">13:00</option>
+                    <option value="13:30">13:30</option>
+                    <option value="14:00">14:00</option>
+                    <option value="14:30">14:30</option>
+                    <option value="15:00">15:00</option>
+                </select>
+
+                <button type="submit">Pedir</button>
+
+            </form>
+
         </div>
 
     </div>

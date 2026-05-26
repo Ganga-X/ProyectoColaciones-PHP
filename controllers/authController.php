@@ -14,6 +14,7 @@ $result = $stmt->get_result();
 if ($user = $result->fetch_assoc()) {
 
     if (password_verify($password, $user['password'])) {
+
         $_SESSION['id'] = $user['id'];
         $_SESSION['nombre'] = $user['nombre'];
         $_SESSION['rol'] = $user['rol'];
@@ -23,12 +24,15 @@ if ($user = $result->fetch_assoc()) {
         } else {
             header("Location: ../views/usuario.php");
         }
+        exit();
 
     } else {
-        echo "Contraseña incorrecta";
+        header("Location: ../views/login.php?error=pass");
+        exit();
     }
 
 } else {
-    echo "Usuario no encontrado";
+    header("Location: ../views/login.php?error=user");
+    exit();
 }
 ?>
