@@ -71,6 +71,17 @@ body {
     font-size: 14px;
 }
 
+/* ✅ BOTÓN NUEVO */
+.btn-mis-pedidos {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 8px 12px;
+    background: #e67e22;
+    color: white;
+    border-radius: 6px;
+    text-decoration: none;
+}
+
 .nav-dias {
     margin-bottom: 10px;
 }
@@ -103,7 +114,6 @@ body {
     padding: 10px;
 }
 
-/* ✅ NUEVO: ESTILO FORM PEDIDO (sin romper diseño) */
 .card form {
     margin-top: 10px;
 }
@@ -170,6 +180,12 @@ body {
         <a href="editarPerfil.php" style="color:#3498db;">
             Editar datos
         </a>
+
+        <br><br>
+
+        <!-- ✅ BOTÓN AGREGADO -->
+        <a href="misPedidos.php" class="btn-mis-pedidos">Ver mis pedidos</a>
+
     </div>
 
     <h3>Menú del día: <?php echo $dia; ?></h3>
@@ -201,7 +217,6 @@ body {
             <p><?php echo $row['descripcion']; ?></p>
             <p><strong>$<?php echo $row['precio']; ?></strong></p>
 
-            <!-- ✅ PEDIDO -->
             <form action="../controllers/pedidoController.php" method="POST">
 
                 <input type="hidden" name="plato_id" value="<?php echo $row['id']; ?>">
