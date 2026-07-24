@@ -315,33 +315,202 @@ body{
     background:#2980b9;
 }
 
+/* ===========================
+   BOTÓN VER PEDIDOS
+=========================== */
+
+.btn-ver{
+
+    width:100%;
+    max-width:650px;
+
+    padding:18px;
+
+    margin-bottom:25px;
+
+    background:#e67e22;
+
+    color:white;
+
+    border:none;
+
+    border-radius:12px;
+
+    font-size:18px;
+
+    cursor:pointer;
+
+    transition:.3s;
+}
+
+.btn-ver:hover{
+
+    background:#d35400;
+}
+
+
+/* ===========================
+   GRID DE PLATOS
+=========================== */
+
+.grid{
+
+    width:100%;
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+
+    gap:20px;
+
+    margin-top:20px;
+}
+
+
+/* ===========================
+   CARD
+=========================== */
+
+.card{
+
+    background:white;
+
+    border-radius:15px;
+
+    overflow:hidden;
+
+    box-shadow:0 4px 12px rgba(0,0,0,.12);
+
+    transition:.3s;
+}
+
+.card:hover{
+
+    transform:translateY(-4px);
+}
+
+.card img{
+
+    width:100%;
+
+    height:220px;
+
+    object-fit:cover;
+}
+
+.card-content{
+
+    padding:18px;
+}
+
+.card-content h4{
+
+    margin-top:0;
+
+    margin-bottom:10px;
+}
+
+.card-content p{
+
+    margin:8px 0;
+}
+
+
+/* ===========================
+   BOTÓN EDITAR
+=========================== */
+
+.btn-edit{
+
+    width:100%;
+
+    padding:12px;
+
+    margin-top:12px;
+
+    background:#3498db;
+
+    color:white;
+
+    border:none;
+
+    border-radius:10px;
+
+    cursor:pointer;
+}
+
+.btn-edit:hover{
+
+    background:#2980b9;
+}
+
+
+/* ===========================
+   RESPONSIVE
+=========================== */
+
+@media(max-width:768px){
+
+    .container{
+
+        padding:15px;
+    }
+
+    .form-admin{
+
+        max-width:100%;
+    }
+
+}
 </style>
 
 <script>
 
 function toggleMenu() {
 
-    var menu = document.getElementById("menuHamburguesa");
+    const menu = document.getElementById("menuHamburguesa");
+    const overlay = document.getElementById("overlay");
 
-    if(menu.style.left == "0px"){
-        menu.style.left = "-260px";
+    menu.classList.toggle("active");
+    overlay.classList.toggle("active");
+
+    if(menu.classList.contains("active")){
+
+        document.body.style.overflow = "hidden";
+
     }else{
-        menu.style.left = "0px";
+
+        document.body.style.overflow = "auto";
+
     }
 
 }
 
 function toggleSubmenu(){
 
-    var sub = document.getElementById("submenuMovimientos");
+    const sub = document.getElementById("submenuMovimientos");
 
-    if(sub.style.display == "block"){
-        sub.style.display = "none";
-    }else{
-        sub.style.display = "block";
-    }
+    sub.classList.toggle("active");
 
 }
+
+
+document.addEventListener("keydown", function(e){
+
+    if(e.key === "Escape"){
+
+        const menu = document.getElementById("menuHamburguesa");
+
+        if(menu.classList.contains("active")){
+
+            toggleMenu();
+
+        }
+
+    }
+
+});
+
 
 </script>
 
@@ -353,30 +522,57 @@ function toggleSubmenu(){
 <!-- MENÚ HAMBURGUESA -->
 <!-- ========================= -->
 
-<div id="menuHamburguesa" class="menu-lateral">
+<div id="menuHamburguesa" class="sidebar">
 
-    <h2>Menú</h2>
+    <div class="sidebar-header">
+    Menú
+</div>
 
-    <button class="menu-btn" onclick="toggleSubmenu()">
-        Movimientos ▼
-    </button>
+    <ul>
 
-    <div id="submenuMovimientos" class="submenu">
+    <li>
 
-        <a href="movimientos.php">
-            <button class="submenu-btn">
+        <a href="#" onclick="toggleSubmenu(); return false;">
+            📊 Movimientos ▼
+        </a>
+
+        <div id="submenuMovimientos" class="submenu">
+
+            <a href="movimientos.php">
                 Ver Movimientos
-            </button>
-        </a>
+            </a>
 
-        <a href="ventas.php">
-            <button class="submenu-btn">
+            <a href="ventas.php">
                 Ver Ventas
-            </button>
+            </a>
+
+        </div>
+
+    </li>
+
+    <li>
+
+        <a href="verPedidos.php">
+            📦 Ver Pedidos
         </a>
 
-    </div>
+    </li>
 
+    <li>
+
+        <a href="../controllers/logout.php">
+            🚪 Salir
+        </a>
+
+    </li>
+
+</ul>
+
+</div>
+
+<div id="overlay"
+     class="overlay"
+     onclick="toggleMenu()">
 </div>
 
 <!-- ========================= -->
@@ -385,9 +581,9 @@ function toggleSubmenu(){
 
 <div class="header">
 
-    <div style="display:flex; align-items:center; gap:15px;">
+    <div class="header-left">
 
-        <button class="hamburguesa" onclick="toggleMenu()">
+        <button class="menu-btn" onclick="toggleMenu()">
             ☰
         </button>
 
@@ -397,10 +593,14 @@ function toggleSubmenu(){
 
     </div>
 
-    <a href="../controllers/logout.php"
-       style="color:white;text-decoration:none;font-weight:bold;">
-        Salir
-    </a>
+    <div class="header-right">
+
+        <a href="../controllers/logout.php"
+           style="color:white;text-decoration:none;font-weight:bold;">
+            Salir
+        </a>
+
+    </div>
 
 </div>
 
@@ -408,13 +608,6 @@ function toggleSubmenu(){
 
 <!-- BOTÓN VER PEDIDOS -->
 
-<a href="verPedidos.php">
-
-    <button class="btn-ver">
-        Ver Pedidos
-    </button>
-
-</a>
 
 <!-- ========================= -->
 <!-- FORMULARIO -->
